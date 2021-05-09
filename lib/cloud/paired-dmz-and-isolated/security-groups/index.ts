@@ -1,10 +1,10 @@
 import { Construct, Tags } from "@aws-cdk/core";
 import { Vpc, SecurityGroup, Port, Peer } from "@aws-cdk/aws-ec2";
 
-export const INTERFACE_ENDPOINTS_SECURITY_GROUP_NAME: string = "Vpc/InterfaceEndpoints/SecurityGroup";
-export const CLUSTER_INSTANCE_SECURITY_GROUP_NAME: string = "Vpc/InterfaceEndpoints/SecurityGroup";
-export const PUBLIC_LOAD_BALANCER_SECURITY_GROUP_NAME: string = "Vpc/ALB/SecurityGroup";
-export const VPC_LINK_SECURITY_GROUP_NAME: string = "Vpc/VpcLinks/LinkSecurityGroup";
+export const INTERFACE_ENDPOINTS_SECURITY_GROUP_NAME: string = "Vpc/InterfaceEndpoint/SecurityGroup";
+export const CLUSTER_INSTANCE_SECURITY_GROUP_NAME: string = "Vpc/ClusterInstance/SecurityGroup";
+export const PUBLIC_LOAD_BALANCER_SECURITY_GROUP_NAME: string = "Vpc/PublicALB/SecurityGroup";
+export const VPC_LINK_SECURITY_GROUP_NAME: string = "Vpc/VpcLink/SecurityGroup";
 
 export interface PrimarySecurityGroupsProps {
     vpc: Vpc
@@ -36,7 +36,7 @@ export class PrimarySecurityGroups extends Construct {
 
         Tags.of(this.interfaceEndpointGroup).add('Name', INTERFACE_ENDPOINTS_SECURITY_GROUP_NAME);
 
-        this.clusterInstanceGroup = new SecurityGroup(this, 'WebWorkerClusterInstanceSg', {
+        this.clusterInstanceGroup = new SecurityGroup(this, 'ClusterInstanceSecurityGroup', {
             securityGroupName: CLUSTER_INSTANCE_SECURITY_GROUP_NAME,
             vpc: this.vpc,
             description: 'Controls all netwrok access from cluster/ASG instaces',
@@ -56,7 +56,7 @@ export class PrimarySecurityGroups extends Construct {
         this.clusterInstanceGroup.addEgressRule(Peer.prefixList(this.s3PrefixListId), Port.tcp(443), 'Allow outgoing HTTPS traffic to s3 Gateway Interfaces');
         this.clusterInstanceGroup.addEgressRule(Peer.prefixList(this.dynamoDbPrefixListId), Port.tcp(443), 'Allow outgoing HTTPS traffic to Dynamo DB Gateway Interfaces');
 
-        this.publicLoadBalancerGroup = new SecurityGroup(this, 'DefaultVpcAppLbSecurityGroup', {
+        this.publicLoadBalancerGroup = new SecurityGroup(this, 'PublicLoadBalancerSecurityGroup', {
             securityGroupName: PUBLIC_LOAD_BALANCER_SECURITY_GROUP_NAME,
             vpc: this.vpc,
             description: 'Allow HTTP access to ec2 instances for - NGINX Server, Tomcat',
@@ -83,7 +83,7 @@ export class PrimarySecurityGroups extends Construct {
         });
         */
 
-        this.vpcLinkGroup = new SecurityGroup(this, 'DefaultVpcVpcLinkSecurityGroup', {
+        this.vpcLinkGroup = new SecurityGroup(this, 'VpcLinkSecurityGroup', {
             securityGroupName: VPC_LINK_SECURITY_GROUP_NAME,
             vpc: this.vpc,
             allowAllOutbound: false,
