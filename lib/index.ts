@@ -1,3 +1,4 @@
+/*
 export { DefaultVpcProps, DefaultVpc } from "./vpc/default-vpc"
 export {
     CLUSTER_INSTANCE_SECURITY_GROUP_NAME,
@@ -8,4 +9,5 @@ export {
     DefaultVpcSecurityGroups
 } from "./vpc/security-groups/default-vpc-sec-groups"
 
-export * as dmziso from "./cloud/with-dmz-and-isolated-nets"
+*/
+export * as pairedDmzAndIsolated from "./cloud/paired-dmz-and-isolated"

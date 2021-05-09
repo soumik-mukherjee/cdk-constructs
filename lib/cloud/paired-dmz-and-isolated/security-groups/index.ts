@@ -1,10 +1,10 @@
 import { Construct, Tags } from "@aws-cdk/core";
 import { Vpc, SecurityGroup, Port, Peer } from "@aws-cdk/aws-ec2";
 
-export const INTERFACE_ENDPOINTS_SECURITY_GROUP_NAME: string = "DefaultVpc/Vpc/InterfaceEndpoints/SecurityGroup";
-export const CLUSTER_INSTANCE_SECURITY_GROUP_NAME: string = "DefaultVpc/Vpc/InterfaceEndpoints/SecurityGroup";
-export const PUBLIC_LOAD_BALANCER_SECURITY_GROUP_NAME: string = "DefaultVpc/Vpc/ALB/SecurityGroup";
-export const VPC_LINK_SECURITY_GROUP_NAME: string = "DefaultVpc/Vpc/VpcLinks/LinkSecurityGroup";
+export const INTERFACE_ENDPOINTS_SECURITY_GROUP_NAME: string = "Vpc/InterfaceEndpoints/SecurityGroup";
+export const CLUSTER_INSTANCE_SECURITY_GROUP_NAME: string = "Vpc/InterfaceEndpoints/SecurityGroup";
+export const PUBLIC_LOAD_BALANCER_SECURITY_GROUP_NAME: string = "Vpc/ALB/SecurityGroup";
+export const VPC_LINK_SECURITY_GROUP_NAME: string = "Vpc/VpcLinks/LinkSecurityGroup";
 
 export interface PrimarySecurityGroupsProps {
     vpc: Vpc

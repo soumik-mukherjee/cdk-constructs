@@ -1,5 +1,6 @@
-import { DefaultVpc, DefaultVpcProps } from '../lib/vpc/default-vpc';
+//import { DefaultVpc, DefaultVpcProps } from '../lib/vpc/default-vpc';
 //import { expect as expectCDK, matchTemplate, MatchStyle } from '@aws-cdk/assert';
+import { pairedDmzAndIsolated } from "../lib"
 import '@aws-cdk/assert/jest';
 import { App, Stack, StackProps } from "@aws-cdk/core";
 import { RetentionDays } from "@aws-cdk/aws-logs";
@@ -9,7 +10,7 @@ const testApp: App = new App();
 const testStackProps: StackProps = { env: { region: "ap-south-1" } }
 const testStack: Stack = new Stack(testApp, "TestStack", testStackProps);
 const vpcSubnetMaxAzs = 2
-const vpcProps: DefaultVpcProps = {
+const vpcProps: pairedDmzAndIsolated.CloudCompositeProps = {
   cidr: '10.0.0.0/21',
   maxAzs: vpcSubnetMaxAzs,
   vpcFlowLogGroupName: '/vpc/flowLogs',
@@ -17,7 +18,7 @@ const vpcProps: DefaultVpcProps = {
   s3PrefixListId: 'pl-78a54011'
 }
 
-const vpc: DefaultVpc = new DefaultVpc(testStack, 'TestDefaultVpc', vpcProps)
+const vpc: pairedDmzAndIsolated.CloudComposite = new pairedDmzAndIsolated.CloudComposite(testStack, 'TestDefaultVpc', vpcProps)
 
 describe('Validate props', () => {
 
