@@ -7,3 +7,5 @@ export {
     VPC_LINK_SECURITY_GROUP_NAME,
     DefaultVpcSecurityGroups
 } from "./vpc/security-groups/default-vpc-sec-groups"
+
+export * as dmziso from "./cloud/with-dmz-and-isolated-nets"

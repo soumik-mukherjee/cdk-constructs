@@ -1,9 +1,11 @@
 import { Construct, CfnOutput } from "@aws-cdk/core";
 import { Vpc, SubnetType, FlowLogDestination } from "@aws-cdk/aws-ec2";
 import { LogGroup, RetentionDays } from "@aws-cdk/aws-logs";
-import { DefaultVpcSecurityGroups } from "./security-groups/default-vpc-sec-groups"
+import { PrimarySecurityGroups } from "./security-groups"
 
-export interface DefaultVpcProps {
+export * from "./security-groups";
+
+export interface CloudCompositeProps {
     cidr: string;
     maxAzs: number;
     dmzSubnetName?: string;
@@ -16,7 +18,7 @@ export interface DefaultVpcProps {
     s3PrefixListId: string;
 }
 
-export class DefaultVpc extends Construct {
+export class CloudComposite extends Construct {
     readonly vpc: Vpc
     readonly cidr: string
     readonly maxAzs: number
@@ -28,9 +30,9 @@ export class DefaultVpc extends Construct {
     readonly vpcFlowLogRetention: RetentionDays
     readonly dynamoDbPrefixListId: string
     readonly s3PrefixListId: string
-    readonly securityGroups: DefaultVpcSecurityGroups
+    readonly securityGroups: PrimarySecurityGroups
 
-    constructor(scope: Construct, id: string, props: DefaultVpcProps) {
+    constructor(scope: Construct, id: string, props: CloudCompositeProps) {
         super(scope, id);
 
         this.cidr = props.cidr
@@ -74,13 +76,13 @@ export class DefaultVpc extends Construct {
             destination: FlowLogDestination.toCloudWatchLogs(vpcFlowLogGroup)
         });
 
-        new CfnOutput(this, `${id}.vpcId`, {
+        new CfnOutput(this, `vpcId`, {
             value: this.vpc.vpcId,
             description: 'The Id of the VPC',
-            exportName: `${id}.vpcId`,
+            exportName: `vpcId`,
         });
 
-        this.securityGroups = new DefaultVpcSecurityGroups(this, `DefaultSecurityGroups`, { vpc: this.vpc, dynamoDbPrefixListId: this.dynamoDbPrefixListId, s3PrefixListId: this.s3PrefixListId });
+        this.securityGroups = new PrimarySecurityGroups(this, `PrimarySecurityGroups`, { vpc: this.vpc, dynamoDbPrefixListId: this.dynamoDbPrefixListId, s3PrefixListId: this.s3PrefixListId });
 
     }
 }

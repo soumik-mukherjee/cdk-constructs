@@ -12,7 +12,7 @@ const vpcSubnetMaxAzs = 2
 const vpcProps: DefaultVpcProps = {
   cidr: '10.0.0.0/21',
   maxAzs: vpcSubnetMaxAzs,
-  vpcFlowLogGroupName: '/unifo/cgate/vpc/flowLogs',
+  vpcFlowLogGroupName: '/vpc/flowLogs',
   dynamoDbPrefixListId: 'pl-78a54011',
   s3PrefixListId: 'pl-78a54011'
 }
