@@ -1,5 +1,5 @@
 {
-  "name": "cdk-constructs",
+  "name": "@smukherj/cdk-constructs",
   "version": "0.1.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -24,5 +24,9 @@
   "peerDependencies": {
     "@aws-cdk/aws-ec2": "^1.102.0",
     "@aws-cdk/aws-logs": "^1.102.0"
+  },
+  "repository": {
+    "url": "https://github.com/soumik-mukherjee/cdk-constructs",
+    "type": "git"
   }
 }
