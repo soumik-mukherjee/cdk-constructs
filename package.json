@@ -1,7 +1,7 @@
 {
   "name": "@smukherj/cdk-constructs",
   "license": "MIT",
-  "version": "1.0.0-dev.6",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
